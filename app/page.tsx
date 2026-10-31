@@ -36,7 +36,9 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <TrustStrip />
+      <div id="explore">
+        <TrustStrip />
+      </div>
 
       {/* About */}
       <section aria-labelledby="about-heading" className="bg-ivory py-20 text-charcoal md:py-32">

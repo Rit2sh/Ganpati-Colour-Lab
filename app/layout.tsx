@@ -5,6 +5,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { ScrollUpDown } from "@/components/ScrollUpDown";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_URL, allKeywords, business, geo } from "@/lib/site";
 import { localBusinessLd, websiteLd, ogImage } from "@/lib/seo";
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
+        <ScrollUpDown />
         <WhatsAppFloat />
         {GA_ID && (
           <>

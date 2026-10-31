@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronDown } from "lucide-react";
 import { JsonLd } from "./JsonLd";
 import { breadcrumbLd, faqLd } from "@/lib/seo";
 import { CallButton, WaNumberPicker } from "./WhatsApp";
@@ -126,7 +126,9 @@ export function Faq({ faqs, withSchema = true }: { faqs: { q: string; a: string 
           <details key={f.q} className="group p-6 open:bg-charcoal-2">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-xl text-ivory md:text-2xl">
               {f.q}
-              <span aria-hidden className="text-gold transition group-open:rotate-45">+</span>
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold/40 text-gold transition-transform duration-300 group-open:-rotate-180">
+                <ChevronDown size={16} aria-hidden />
+              </span>
             </summary>
             <p className="mt-3 max-w-3xl leading-relaxed text-ivory/70">{f.a}</p>
           </details>
