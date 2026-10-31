@@ -1,0 +1,100 @@
+// PostgreSQL schema for Ganpati Colour Lab.
+// Database storage is OPTIONAL: the public site works without it
+// (the quote form goes straight to WhatsApp and stores nothing).
+// Only store enquiries if the customer has given consent.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AdminRole {
+  OWNER
+  EDITOR
+}
+
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CLOSED
+}
+
+model AdminUser {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         AdminRole @default(EDITOR)
+  createdAt    DateTime  @default(now())
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  image       String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([active])
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  title     String
+  category  String
+  imageUrl  String
+  altText   String
+  sortOrder Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([category, published, sortOrder])
+}
+
+model AlbumProduct {
+  id             String   @id @default(cuid())
+  name           String
+  description    String
+  coverImage     String?
+  specifications Json?
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  @@index([active])
+}
+
+model Enquiry {
+  id           String        @id @default(cuid())
+  customerName String
+  phone        String
+  serviceType  String
+  quantity     Int?
+  eventDate    DateTime?
+  message      String?
+  consentGiven Boolean       @default(false)
+  status       EnquiryStatus @default(NEW)
+  createdAt    DateTime      @default(now())
+
+  @@index([status, createdAt])
+  @@index([phone])
+}
+
+model SiteSettings {
+  id             Int      @id @default(1)
+  businessName   String
+  phonePrimary   String
+  phoneSecondary String?
+  address        String
+  instagramUrl   String?
+  seoTitle       String?
+  seoDescription String?
+  updatedAt      DateTime @updatedAt
+}
